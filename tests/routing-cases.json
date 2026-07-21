@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {"id": "investigate-unknown-failure", "kind": "positive", "prompt": "Investigate why checkout sometimes returns 502; do not change code.", "expected_intent": "investigation", "expected_skills": ["dev-workflow", "investigation"]},
+    {"id": "urgent-contained-fix", "kind": "positive", "prompt": "Production is down; prepare the smallest reversible hotfix after approval.", "expected_intent": "hotfix", "expected_skills": ["dev-workflow", "investigation", "completion-gate"]},
+    {"id": "known-defect-correction", "kind": "positive", "prompt": "Fix the confirmed parser defect and add a regression test.", "expected_intent": "bugfix", "expected_skills": ["dev-workflow", "completion-gate"]},
+    {"id": "new-capability", "kind": "positive", "prompt": "Add CSV export with these approved acceptance criteria.", "expected_intent": "feature", "expected_skills": ["dev-workflow", "completion-gate"]},
+    {"id": "preserve-behavior", "kind": "positive", "prompt": "Refactor the billing adapter without changing observable behavior.", "expected_intent": "refactor", "expected_skills": ["dev-workflow", "repo-context", "completion-gate"]},
+    {"id": "schema-transition", "kind": "positive", "prompt": "Plan the incremental migration from legacy customer IDs.", "expected_intent": "migration", "expected_skills": ["dev-workflow", "repo-context"]},
+    {"id": "timeboxed-learning", "kind": "positive", "prompt": "Run a two-hour spike to determine whether streaming is viable.", "expected_intent": "spike", "expected_skills": ["dev-workflow", "completion-gate"]},
+    {"id": "fixed-change-review", "kind": "positive", "prompt": "Review the exact files changed in this patch against the PRD.", "expected_intent": "review", "expected_skills": ["dev-workflow", "review-gate"]},
+    {"id": "implement-and-failing-test", "kind": "conflict", "prompt": "Implement the feature and fix the failing test in the integration suite.", "expected_intent": "investigation", "reason": "An unexplained observed failure takes precedence over implementation."},
+    {"id": "review-and-fix", "kind": "conflict", "prompt": "Review this diff and fix anything you find.", "expected_intent": "review", "reason": "Review remains read-only; fixes require a separately approved transition."},
+    {"id": "explain-concept", "kind": "negative", "prompt": "Explain eventual consistency in general terms.", "expected_intent": null, "reason": "No repository engineering workflow is requested."},
+    {"id": "simple-copy-edit", "kind": "negative", "prompt": "Correct the grammar in this sentence.", "expected_intent": null, "reason": "A trivial prose edit does not need the lead workflow."}
+  ]
+}

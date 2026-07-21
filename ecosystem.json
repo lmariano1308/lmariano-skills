@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "name": "lmariano-engineering-foundation",
+  "license": "MIT",
+  "skills": [
+    {"name": "dev-workflow", "path": "skills/dev-workflow", "capabilities": ["intent-routing", "workflow-coordination", "safety-gating"]},
+    {"name": "repo-context", "path": "skills/repo-context", "capabilities": ["repository-mapping", "symbol-tracing", "evidence-synthesis"]},
+    {"name": "investigation", "path": "skills/investigation", "capabilities": ["debugging", "root-cause-analysis", "experiment-design"]},
+    {"name": "prd", "path": "skills/prd", "capabilities": ["product-discovery", "requirements-synthesis", "tracer-bullet-planning"]},
+    {"name": "review-gate", "path": "skills/review-gate", "capabilities": ["spec-review", "standards-review", "verification-review", "risk-based-security-review"]},
+    {"name": "completion-gate", "path": "skills/completion-gate", "capabilities": ["completion-gating", "evidence-verification"]}
+  ],
+  "optional_capabilities": {
+    "backend-go": {"preferred": ["go-engineering"], "fallback": "repository rules and native project commands"},
+    "frontend-angular": {"preferred": ["angular"], "fallback": "repository rules and native project commands"},
+    "mongo": {"preferred": ["mongodb"], "fallback": "repository rules and native project commands"},
+    "postgres": {"preferred": ["postgresql"], "fallback": "repository rules and native project commands"},
+    "redis": {"preferred": ["redis"], "fallback": "repository rules and native project commands"},
+    "visual-validation": {"preferred": ["webapp-testing"], "fallback": "available local browser or manual evidence supplied by the user"}
+  },
+  "upstream_complements": [
+    {"name": "grilling", "source": "mattpocock/skills", "role": "optional discovery questioning"},
+    {"name": "verification-before-completion", "source": "obra/superpowers", "role": "comparison for completion evidence"},
+    {"name": "receiving-code-review", "source": "obra/superpowers", "role": "evidence-based handling of review feedback"}
+  ],
+  "compatibility_targets": [
+    "Agent Skills core format",
+    "Pi skill discovery and explicit skill commands",
+    "Harnesses that load directory-based SKILL.md packages"
+  ]
+}

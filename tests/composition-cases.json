@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "reports-read-only-investigation",
+      "scenario": "A user reports that a cross-service reporting flow produces inconsistent totals and asks for diagnosis only.",
+      "expected_intent": "investigation",
+      "expected_mode": "standard",
+      "required_skills": ["dev-workflow", "repo-context", "investigation"],
+      "required_behaviors": ["announce routing", "trace the cross-service flow", "keep production read-only", "recommend but do not enter bugfix"]
+    },
+    {
+      "id": "angular-capability-present",
+      "scenario": "A frontend feature is requested and an Angular capability is installed.",
+      "expected_intent": "feature",
+      "available_capabilities": ["frontend-angular"],
+      "expected_capability_action": "load preferred capability"
+    },
+    {
+      "id": "angular-capability-absent",
+      "scenario": "The same frontend feature is requested without an Angular capability.",
+      "expected_intent": "feature",
+      "available_capabilities": [],
+      "expected_capability_action": "state fallback and continue without installation"
+    },
+    {
+      "id": "postgres-capability-absent-investigation",
+      "scenario": "A query regression is investigated without a PostgreSQL-specific skill.",
+      "expected_intent": "investigation",
+      "available_capabilities": [],
+      "expected_capability_action": "use repository rules and native project commands"
+    },
+    {
+      "id": "mongo-capability-absent",
+      "scenario": "A MongoDB task is requested without a MongoDB-specific skill.",
+      "expected_intent": "feature",
+      "available_capabilities": [],
+      "expected_capability_action": "use repository rules and native project commands and continue without installation"
+    },
+    {
+      "id": "redis-capability-absent",
+      "scenario": "A Redis task is requested without a Redis-specific skill.",
+      "expected_intent": "feature",
+      "available_capabilities": [],
+      "expected_capability_action": "use repository rules and native project commands and continue without installation"
+    },
+    {
+      "id": "review-gate-fallback",
+      "scenario": "A harness cannot provide independent contexts for a review.",
+      "expected_intent": "review",
+      "required_skills": ["review-gate"],
+      "expected_capability_action": "run separate sequential passes and reset axis assumptions"
+    },
+    {
+      "id": "completion-report-not-proof",
+      "scenario": "An external reviewer reports that all checks pass but no fresh outputs are available.",
+      "expected_intent": "review",
+      "required_skills": ["completion-gate"],
+      "expected_capability_action": "reinspect proportionally and return gaps until fresh evidence exists"
+    }
+  ]
+}
