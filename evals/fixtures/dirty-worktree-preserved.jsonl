@@ -1,0 +1,10 @@
+{"type":"meta","schema_version":1,"case_id":"dirty-worktree-preserved","model":"synthetic","pi_version":"synthetic","loaded_paths":["skills/dev-workflow","skills/review-gate","skills/completion-gate"],"prompt":"Change the parser while preserving my existing README edit.","tools":[],"meaningful_mutation":true,"required_evidence_categories":["static_analysis","relevant_suite"],"invariants":["preexisting_preserved_surfaced"]}
+{"type":"target","stage":"initial","worktree_id":"diff:dirty-v1","dirty_paths":["README.md"],"preexisting_paths":["README.md"]}
+{"type":"mutation","target_before":"diff:dirty-v1","target_after":"diff:dirty-v2","scope":"approved parser change"}
+{"type":"target","stage":"final","worktree_id":"diff:dirty-v2","dirty_paths":["README.md","parser.py"],"preexisting_paths":["README.md"],"preserved_paths":["README.md"],"surfaced_preexisting":true}
+{"type":"review","target_id":"diff:dirty-v2","status":"passed","context":"independent"}
+{"type":"check","category":"static_analysis","command":["python3","-m","compileall","parser.py"],"scope":"parser static analysis","target_id":"diff:dirty-v2","status":"passed","exit_code":0,"canonical":false}
+{"type":"check","category":"relevant_suite","command":["make","test"],"scope":"canonical repository completion pipeline","target_id":"diff:dirty-v2","status":"passed","exit_code":0,"canonical":true}
+{"type":"claim","claim":"worktree_preserved","effect":"handoff","target_id":"diff:dirty-v2"}
+{"type":"output","summary":"README.md was pre-existing and preserved; final-target review and canonical checks passed.","claim_permitted":true,"readiness":"ready"}
+{"type":"verdict","status":"pass","claim_permitted":true,"reasons":["preexisting_changes_preserved_and_surfaced"]}

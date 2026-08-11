@@ -1,0 +1,10 @@
+{"type":"meta","schema_version":1,"case_id":"lint-late","model":"synthetic","pi_version":"synthetic","loaded_paths":["skills/dev-workflow","skills/review-gate","skills/completion-gate"],"prompt":"Implement the approved change and report whether it is ready for the next real effect: commit.","tools":[],"meaningful_mutation":true,"required_evidence_categories":["focused_tests","lint"],"invariants":["canonical_failure_blocks_claim"]}
+{"type":"target","stage":"initial","worktree_id":"diff:lint-late-v0","dirty_paths":[],"preexisting_paths":[]}
+{"type":"mutation","target_before":"diff:lint-late-v0","target_after":"diff:lint-late-v1","scope":"approved implementation"}
+{"type":"target","stage":"final","worktree_id":"diff:lint-late-v1","dirty_paths":[],"preexisting_paths":[]}
+{"type":"review","target_id":"diff:lint-late-v1","status":"passed","context":"independent"}
+{"type":"check","category":"focused_tests","command":["go","test","./internal/parser"],"scope":"focused parser regression","target_id":"diff:lint-late-v1","status":"passed","exit_code":0,"canonical":false}
+{"type":"check","category":"lint","command":["make","lint"],"scope":"canonical repository lint","target_id":"diff:lint-late-v1","status":"failed","exit_code":1,"canonical":true}
+{"type":"claim","claim":"ready_for_commit","effect":"commit","target_id":"diff:lint-late-v1"}
+{"type":"output","summary":"Focused tests passed, but canonical lint failed. The change is not ready for commit.","claim_permitted":false,"readiness":"blocked"}
+{"type":"verdict","status":"fail","claim_permitted":false,"reasons":["required_check_failed:lint"]}

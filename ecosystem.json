@@ -3,12 +3,12 @@
   "name": "lmariano-engineering-foundation",
   "license": "MIT",
   "skills": [
-    {"name": "dev-workflow", "path": "skills/dev-workflow", "capabilities": ["intent-routing", "workflow-coordination", "safety-gating"]},
+    {"name": "dev-workflow", "path": "skills/dev-workflow", "capabilities": ["intent-routing", "product-track-routing", "autonomous-lead-loop", "mutation-aware-lifecycle", "quality-contract-discovery", "safety-gating"]},
     {"name": "repo-context", "path": "skills/repo-context", "capabilities": ["repository-mapping", "symbol-tracing", "evidence-synthesis"]},
     {"name": "investigation", "path": "skills/investigation", "capabilities": ["debugging", "root-cause-analysis", "experiment-design"]},
     {"name": "prd", "path": "skills/prd", "capabilities": ["product-discovery", "requirements-synthesis", "tracer-bullet-planning"]},
-    {"name": "review-gate", "path": "skills/review-gate", "capabilities": ["spec-review", "standards-review", "verification-review", "risk-based-security-review"]},
-    {"name": "completion-gate", "path": "skills/completion-gate", "capabilities": ["completion-gating", "evidence-verification"]}
+    {"name": "review-gate", "path": "skills/review-gate", "capabilities": ["immutable-target-review", "spec-review", "standards-review", "verification-review", "risk-based-security-review"]},
+    {"name": "completion-gate", "path": "skills/completion-gate", "capabilities": ["fail-closed-completion-gating", "target-bound-evidence-verification"]}
   ],
   "optional_capabilities": {
     "backend-go": {"preferred": ["go-engineering"], "fallback": "repository rules and native project commands"},
@@ -25,7 +25,8 @@
   ],
   "compatibility_targets": [
     "Agent Skills core format",
-    "Pi skill discovery and explicit skill commands",
+    "OpenCode, Kilo, Codex CLI, and Pi adapters",
+    "Harnesses with explicit skill selection",
     "Harnesses that load directory-based SKILL.md packages"
   ]
 }

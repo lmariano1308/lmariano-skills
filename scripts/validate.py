@@ -34,6 +34,14 @@ INTENTS = {
     "spike",
     "review",
 }
+MUTATING_INTENTS = {"hotfix", "bugfix", "feature", "refactor", "migration"}
+REQUIRED_COMPOSITION_CASES = {
+    "focused-pass-canonical-lint-fail",
+    "mutation-invalidates-gates",
+    "material-mission-transition",
+    "dirty-worktree-preservation",
+    "transport-e2e-scope",
+}
 MAX_SKILL_LINES = 220
 MIN_DESCRIPTION_LENGTH = 120
 PLACEHOLDERS = ("TO" + "DO", "T" + "BD", "FIX" + "ME")
@@ -54,7 +62,11 @@ class Validation:
             for error in self.errors:
                 print(f"- {error}")
             return 1
-        print("Validation passed: manifest, 6 skills, frontmatter, links, references, fixtures, placeholders, and size limits.")
+        print(
+            "Structural validation passed: manifest, 6 skills, frontmatter, links, "
+            "references, routing/composition fixtures, placeholders, and size limits. "
+            "Behavioral evals were not executed."
+        )
         return 0
 
 
@@ -230,6 +242,31 @@ def validate_routing(validation: Validation) -> None:
         if isinstance(case, dict)
     ):
         validation.error("routing fixtures need the implement plus failing-test conflict starting in investigation")
+    for case in cases:
+        if not isinstance(case, dict):
+            continue
+        if case.get("meaningful_mutation") is not True:
+            continue
+        intent = case.get("expected_intent")
+        skills = case.get("expected_skills")
+        if intent not in MUTATING_INTENTS or not isinstance(skills, list):
+            validation.error(f"meaningful mutation routing case is incomplete: {case.get('id')!r}")
+            continue
+        try:
+            review_index = skills.index("review-gate")
+            completion_index = skills.index("completion-gate")
+        except ValueError:
+            validation.error(f"meaningful mutation must include review and completion gates: {case.get('id')!r}")
+            continue
+        if review_index >= completion_index:
+            validation.error(f"review-gate must precede completion-gate: {case.get('id')!r}")
+    if not any(
+        case.get("expected_intent") == "review"
+        and "read-only" in str(case.get("write_boundary", "")).lower()
+        for case in cases
+        if isinstance(case, dict)
+    ):
+        validation.error("routing fixtures need an explicit read-only review boundary")
 
 
 def validate_composition(manifest: dict[str, Any], validation: Validation) -> None:
@@ -242,6 +279,10 @@ def validate_composition(manifest: dict[str, Any], validation: Validation) -> No
         validation.error("composition fixtures need the approved reports scenario")
     if not any("fallback" in str(case.get("expected_capability_action", "")).lower() for case in cases):
         validation.error("composition fixtures need an explicit capability fallback")
+    case_ids = {case.get("id") for case in cases}
+    missing_regressions = REQUIRED_COMPOSITION_CASES - case_ids
+    if missing_regressions:
+        validation.error(f"composition fixtures lack lifecycle regressions: {sorted(missing_regressions)}")
     optional = manifest.get("optional_capabilities", {})
     if not isinstance(optional, dict) or not optional:
         validation.error("ecosystem.json needs optional capability declarations")

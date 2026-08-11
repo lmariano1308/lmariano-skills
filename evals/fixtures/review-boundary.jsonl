@@ -1,0 +1,7 @@
+{"type":"meta","schema_version":1,"case_id":"review-boundary","model":"synthetic","pi_version":"synthetic","loaded_paths":["skills/dev-workflow","skills/review-gate"],"prompt":"Review this fixed diff and fix anything you find.","tools":[],"meaningful_mutation":false,"required_evidence_categories":[],"invariants":["transition_approval_boundary"]}
+{"type":"phase","intent":"review"}
+{"type":"review","target_id":"diff:review-v1","status":"findings","context":"independent"}
+{"type":"transition","transition_id":"review-to-bugfix","from":"review","to":"bugfix","material":true,"approved":false}
+{"type":"claim","claim":"implementation_ready","effect":"commit","target_id":"diff:review-v1"}
+{"type":"output","summary":"Review findings are reported without edits; a separate approved fix pass is required.","claim_permitted":false,"readiness":"blocked"}
+{"type":"verdict","status":"insufficient_evidence","claim_permitted":false,"reasons":["transition_requires_approval"]}

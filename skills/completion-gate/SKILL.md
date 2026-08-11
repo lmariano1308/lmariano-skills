@@ -11,18 +11,16 @@ Ask one central question: **What fresh evidence proves this exact claim?**
 
 ## Gate
 
-1. State the claim narrowly, including intent, scope, and observable outcome.
+1. State the claim, intent, observable outcome, and next real effect such as commit, push, PR, merge, or deploy. Do not shrink the claim below the effect the handoff enables.
 2. Load the matching intent contract from [definitions-by-intent.md](references/definitions-by-intent.md).
-3. Identify direct evidence that could disprove as well as prove the claim.
-4. Run or inspect the freshest safe evidence available. Read complete results, exit status, failures, skipped coverage, and scope.
-5. Separate evidence categories:
-   - lint or static analysis;
-   - build or compilation;
-   - tests, including focused regression and relevant suite;
-   - behavior verification against the original or acceptance scenario;
-   - operational evidence when applicable.
-6. Reinspect author, reviewer, delegated, or external reports in proportion to risk. Their summaries locate evidence; they do not replace it.
-7. Compare evidence to every material requirement and state gaps without optimistic extrapolation.
+3. Capture the final diff/worktree identity and dirty paths. Verify that review and every result target that identity; any later mutation invalidates all of them.
+4. Discover the repository-native commands and run the applicable canonical hook or CI-equivalent pipeline. Do not substitute a convenient focused command for a repository contract.
+5. Record each applicable category independently: format, lint, static analysis, build/compilation, focused tests, relevant suite, full suite, behavior, and operational checks. Never merge lint with static analysis or relevant with full suite. Use `not applicable` only with a concrete reason.
+6. Read complete outputs, exit results, failures, timeouts, skips, and scope. Reinspect author, reviewer, delegated, or external reports in proportion to risk; summaries locate evidence but do not replace it.
+7. Map each result to the claim it permits. Transport end-to-end evidence does not prove business end-to-end behavior; focused tests do not prove feature readiness.
+8. Compare all material requirements to the final identity without optimistic extrapolation.
+
+Every applicable failure, timeout, unexpected skip, or unavailable required command blocks the claim, whether or not the check is canonical. Missing required categories, stale review, stale evidence, or a changed diff are also `fail` or `insufficient evidence`, never `pass` or `conditional`. A mutation invalidates the review and every prior check or behavior category tied to the old target; rerun each required or invalidated category against the final target.
 
 Production remains read-only. If proving a claim would require a production write, restart, deployment, migration, destructive action, remote write, or code change, stop and request explicit approval. Never install dependencies to manufacture a validation path.
 
@@ -33,7 +31,7 @@ Redact secrets, tokens, passwords, PII, and sensitive payloads. Prefer command, 
 ```markdown
 ## Claim
 ## Evidence
-| Category | Fresh evidence | Scope | Result |
+| Category | Command or observation | Scope | Freshness / target identity | Exit result | Claim permitted |
 ## Gaps
 ## Verdict
 ```
@@ -41,7 +39,7 @@ Redact secrets, tokens, passwords, PII, and sensitive payloads. Prefer command, 
 Use one verdict:
 
 - `pass`: fresh evidence proves the claim at the required scope;
-- `conditional`: verified scope passes, but named non-blocking limits remain;
+- `conditional`: verified scope passes and only named, genuinely non-blocking limits remain;
 - `fail`: evidence contradicts the claim or a blocking requirement fails;
 - `insufficient evidence`: required proof is absent, stale, inaccessible, or unsafe without approval.
 

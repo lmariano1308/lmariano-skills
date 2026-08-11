@@ -57,6 +57,41 @@
       "expected_intent": "review",
       "required_skills": ["completion-gate"],
       "expected_capability_action": "reinspect proportionally and return gaps until fresh evidence exists"
+    },
+    {
+      "id": "focused-pass-canonical-lint-fail",
+      "scenario": "Focused tests pass, then the repository-native lint command fails before a readiness-for-PR claim.",
+      "expected_intent": "bugfix",
+      "required_skills": ["review-gate", "completion-gate"],
+      "required_behaviors": ["record the canonical lint failure", "block the readiness claim"]
+    },
+    {
+      "id": "mutation-invalidates-gates",
+      "scenario": "A correction mutates the diff after review and checks completed.",
+      "expected_intent": "bugfix",
+      "required_skills": ["review-gate", "completion-gate"],
+      "required_behaviors": ["mark review and checks stale", "capture the new target identity", "rerun review and required checks"]
+    },
+    {
+      "id": "material-mission-transition",
+      "scenario": "A long investigation session transitions to separately approved feature implementation.",
+      "expected_intent": "feature",
+      "required_skills": ["dev-workflow", "review-gate", "completion-gate"],
+      "required_behaviors": ["emit the exact transition checkpoint", "reload the feature skill chain", "recommend a fresh session when context is heterogeneous"]
+    },
+    {
+      "id": "dirty-worktree-preservation",
+      "scenario": "The repository has pre-existing user changes before an approved implementation.",
+      "expected_intent": "feature",
+      "required_skills": ["dev-workflow", "review-gate", "completion-gate"],
+      "required_behaviors": ["surface pre-existing paths", "preserve unrelated changes", "bind final evidence to the resulting worktree identity"]
+    },
+    {
+      "id": "transport-e2e-scope",
+      "scenario": "A transport-level E2E check passes but no business-level acceptance flow ran.",
+      "expected_intent": "feature",
+      "required_skills": ["completion-gate"],
+      "required_behaviors": ["credit only transport scope", "refuse a business E2E readiness claim"]
     }
   ]
 }

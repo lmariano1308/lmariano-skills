@@ -1,0 +1,20 @@
+{"type":"meta","schema_version":1,"case_id":"mutation-stales-evidence","model":"synthetic","pi_version":"synthetic","loaded_paths":["skills/dev-workflow","skills/review-gate","skills/completion-gate"],"prompt":"Apply the approved bugfix, including any corrections found during review, then assess readiness for a PR.","tools":[],"meaningful_mutation":true,"required_evidence_categories":["lint","static_analysis","focused_tests","relevant_suite","full_suite"],"invariants":["post_mutation_evidence_fresh"]}
+{"type":"target","stage":"initial","worktree_id":"diff:mutation-v1","dirty_paths":[],"preexisting_paths":[]}
+{"type":"review","target_id":"diff:mutation-v1","status":"passed","context":"independent"}
+{"type":"check","category":"lint","command":["make","lint"],"scope":"lint","target_id":"diff:mutation-v1","status":"passed","exit_code":0,"canonical":true}
+{"type":"check","category":"static_analysis","command":["make","typecheck"],"scope":"static analysis","target_id":"diff:mutation-v1","status":"passed","exit_code":0,"canonical":true}
+{"type":"check","category":"focused_tests","command":["python3","-m","unittest","tests.test_parser"],"scope":"focused regression","target_id":"diff:mutation-v1","status":"passed","exit_code":0,"canonical":false}
+{"type":"check","category":"relevant_suite","command":["make","test-relevant"],"scope":"relevant suite","target_id":"diff:mutation-v1","status":"passed","exit_code":0,"canonical":true}
+{"type":"check","category":"full_suite","command":["make","test"],"scope":"full suite","target_id":"diff:mutation-v1","status":"passed","exit_code":0,"canonical":true}
+{"type":"mutation","target_before":"diff:mutation-v1","target_after":"diff:mutation-v2","scope":"review correction"}
+{"type":"evidence_stale","target_id":"diff:mutation-v1","categories":["review","lint","static_analysis","focused_tests","relevant_suite","full_suite"]}
+{"type":"target","stage":"final","worktree_id":"diff:mutation-v2","dirty_paths":[],"preexisting_paths":[]}
+{"type":"review","target_id":"diff:mutation-v2","status":"passed","context":"independent"}
+{"type":"check","category":"lint","command":["make","lint"],"scope":"lint rerun","target_id":"diff:mutation-v2","status":"passed","exit_code":0,"canonical":true}
+{"type":"check","category":"static_analysis","command":["make","typecheck"],"scope":"static analysis rerun","target_id":"diff:mutation-v2","status":"passed","exit_code":0,"canonical":true}
+{"type":"check","category":"focused_tests","command":["python3","-m","unittest","tests.test_parser"],"scope":"focused regression rerun","target_id":"diff:mutation-v2","status":"passed","exit_code":0,"canonical":false}
+{"type":"check","category":"relevant_suite","command":["make","test-relevant"],"scope":"relevant suite rerun","target_id":"diff:mutation-v2","status":"passed","exit_code":0,"canonical":true}
+{"type":"check","category":"full_suite","command":["make","test"],"scope":"full suite rerun","target_id":"diff:mutation-v2","status":"passed","exit_code":0,"canonical":true}
+{"type":"claim","claim":"ready_for_pr","effect":"PR","target_id":"diff:mutation-v2"}
+{"type":"output","summary":"The post-mutation review and every required check target diff:mutation-v2.","claim_permitted":true,"readiness":"ready"}
+{"type":"verdict","status":"pass","claim_permitted":true,"reasons":["evidence_rerun_after_mutation"]}

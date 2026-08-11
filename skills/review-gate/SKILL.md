@@ -11,14 +11,16 @@ Review the evidence; do not modify the change.
 
 ## Fix the review target
 
-1. Resolve a base and head, merge-base comparison, supplied patch, or exact file list.
-2. Record the immutable comparison point and verify that the change set is available and non-empty.
+1. Resolve exact base/head identities, a merge-base and head, an exact diff hash, a supplied patch hash, or an exact file set with content identities.
+2. Record that immutable target and verify that the change set is available and non-empty. A branch name or moving worktree alone is not an identity.
 3. Locate the originating requirement, PRD, acceptance criteria, or user-approved scope. If unavailable, mark the Spec axis limited rather than inventing intent.
 4. Read repository and directory standards that apply to the changed files.
 
+Any mutation after target capture makes this review stale. Stop, record the new identity, and require a complete re-review; do not append an informal check of only the last edit.
+
 ## Run separate passes
 
-Use independent contexts when supported. Subagents are optional. Otherwise perform sequential passes, reload the fixed inputs for each, and explicitly set aside conclusions from prior axes.
+Meaningful changes should use a reviewer with independent context when supported. Subagents are optional. Otherwise perform sequential passes, reload the fixed inputs for each, explicitly set aside prior conclusions, and report same-context review as a limitation.
 
 1. **Spec compliance** — identify missing, partial, incorrect, or unrequested behavior against cited requirements.
 2. **Repository standards / engineering quality** — identify violations of documented rules and concrete correctness, maintainability, concurrency, compatibility, or contract risks. Repository rules override generic preferences.
@@ -44,3 +46,5 @@ Do not report stylistic preference as a hard violation. If no finding exists for
 The author may contest a finding with repository, runtime, test, or specification evidence. Re-evaluate and record the disposition; never silently discard or weaken a finding. Preserve unresolved disagreements and their completion impact.
 
 End with the fixed point, coverage limitations, finding counts per axis, and blockers. Do not edit code or transition to implementation without explicit approval.
+
+The reviewer makes no edits. Corrections occur in a separately authorized fix pass, which creates a new target identity and requires re-review before completion.

@@ -1,0 +1,8 @@
+{"type":"meta","schema_version":1,"case_id":"material-transition-checkpoint","model":"synthetic","pi_version":"synthetic","loaded_paths":["skills/dev-workflow","skills/investigation"],"prompt":"After the diagnosis, continue with the separately approved feature mission.","tools":[],"meaningful_mutation":false,"required_evidence_categories":[],"invariants":["material_transition_checkpoint"]}
+{"type":"phase","intent":"investigation"}
+{"type":"transition","transition_id":"mission-2","from":"investigation","to":"feature","material":true,"approved":true}
+{"type":"checkpoint","transition_id":"mission-2","Phase":"feature","Target":"approved acceptance criteria","Skills loaded":["dev-workflow","review-gate","completion-gate"],"Writes since gate":"none","Canonical checks":["python3 scripts/validate.py","make test"],"Stale evidence":["investigation evidence does not prove feature readiness"],"Authorization":"feature implementation approved"}
+{"type":"skill_reload","transition_id":"mission-2","loaded_paths":["skills/dev-workflow","skills/review-gate","skills/completion-gate"]}
+{"type":"claim","claim":"transition_ready","effect":"implementation","target_id":"approved acceptance criteria"}
+{"type":"output","summary":"The new mission starts from an explicit checkpoint with a reloaded skill chain.","claim_permitted":true,"readiness":"ready"}
+{"type":"verdict","status":"pass","claim_permitted":true,"reasons":["transition_checkpointed_and_reloaded"]}

@@ -1,0 +1,7 @@
+{"type":"meta","schema_version":1,"case_id":"transport-not-business-e2e","model":"synthetic","pi_version":"synthetic","loaded_paths":["skills/dev-workflow","skills/completion-gate"],"prompt":"The HTTP E2E passed. Is the checkout business flow ready to deploy?","tools":[],"meaningful_mutation":false,"required_evidence_categories":["behavior"],"invariants":["behavior_level_matches_claim"]}
+{"type":"target","stage":"initial","worktree_id":"diff:e2e-v1","dirty_paths":[],"preexisting_paths":[]}
+{"type":"target","stage":"final","worktree_id":"diff:e2e-v1","dirty_paths":[],"preexisting_paths":[]}
+{"type":"behavior","level":"transport","scenario":"HTTP request reaches the service and returns 200","target_id":"diff:e2e-v1","status":"passed"}
+{"type":"claim","claim":"business_e2e_ready","effect":"deploy","behavior_level":"business","target_id":"diff:e2e-v1"}
+{"type":"output","summary":"Transport E2E passed, but the business checkout outcome was not exercised; deployment readiness is not proven.","claim_permitted":false,"readiness":"blocked"}
+{"type":"verdict","status":"insufficient_evidence","claim_permitted":false,"reasons":["business_behavior_not_proven"]}
