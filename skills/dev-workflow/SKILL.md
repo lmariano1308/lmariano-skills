@@ -1,6 +1,6 @@
 ---
 name: dev-workflow
-description: "Coordinate non-trivial repository engineering by classifying investigation, hotfix, bugfix, feature, refactor, migration, spike, or review work; announce the selected skill chain and risk mode; apply authorization gates; and require completion evidence. Use as the entry point when a task spans discovery, implementation, review, or verification. Do not use for trivial explanations or prose-only edits, and do not use it to bypass a specialized skill or approve its own high-risk work."
+description: "Coordinate non-trivial repository engineering by classifying investigation, hotfix, bugfix, feature, refactor, migration, spike, or review work; announce the selected skill chain and risk mode; apply authorization gates; and require completion evidence. Use as the entry point when a task spans discovery, implementation, review, or verification; use it also when the deliverable is a written implementation plan for such work. Do not use for trivial explanations or prose-only edits, and do not use it to bypass a specialized skill or approve its own high-risk work."
 license: MIT
 compatibility: "Portable Agent Skills package; works best in a repository with local instructions, immutable change identities, and read-only inspection capabilities."
 ---
@@ -38,6 +38,7 @@ Do this before substantial work.
 - Label material conclusions `confirmed`, `probable`, `hypothesis`, `contradiction`, or `unknown`. Redact secrets, tokens, passwords, PII, and sensitive payloads.
 - Keep format, lint, static analysis, build, focused tests, relevant suite, full suite, behavior, and operational verification as separate evidence categories.
 - Bind reviews and check results to the exact diff or worktree identity they inspected.
+- Never round-trip a large authored file through `read_file` → `write_file`: `read_file` truncates near 100K characters and the rewrite silently drops everything past the cut. Edit with `patch`, or read the whole file in code and confirm the byte count after writing.
 
 ## Mutation-aware lifecycle
 
@@ -72,6 +73,7 @@ End with the current verdict, evidence gaps, and one recommended next intent. Do
 ## Conditional references
 
 - Read [tracer-bullet-decomposition.md](references/tracer-bullet-decomposition.md) only when a feature, migration, or large refactor needs incremental slicing.
+- Read [plan-authoring.md](references/plan-authoring.md) when the deliverable is a written implementation plan that someone with no context must execute (plan mode, `/plan`, zero-context handoff).
 - Read [cli-connectors-contract.md](references/cli-connectors-contract.md) only when commands, adapters, or external capability boundaries matter.
 - Read [product-workflows.md](references/product-workflows.md) for landing pages, institutional sites, vertical software, or internal systems.
 - Read [autonomous-lead-loop.md](references/autonomous-lead-loop.md) when delegation, multiple waves, or low-supervision execution is part of the approved workflow.

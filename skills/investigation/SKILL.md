@@ -11,7 +11,7 @@ Identify root cause or the next experiment that best separates the remaining exp
 
 ## Establish the signal
 
-1. Record the observed symptom, expected behavior, scope, frequency, environment, and earliest known occurrence.
+1. Record the observed symptom, expected behavior, scope, frequency, environment, and earliest known occurrence. State the report as the exact user action and visible result: which control, which screen, and whether something opens, fails to open, or changes. If the report is ambiguous, ask one confirming question before searching code. A designed read-only state and a control that never opens a screen look alike in a report but live on different code paths, so confirm which one occurs before explaining either.
 2. Build the tightest viable red-capable feedback loop from existing tests and interfaces: a focused test invocation, request replay, ephemeral command, measurement, or deterministic comparison. Do not create or edit repository files under investigation intent.
 3. Run the loop and confirm it detects the exact symptom. Tighten speed, determinism, and specificity.
 4. Minimize the reproduction one variable at a time while preserving the signal.
@@ -40,3 +40,5 @@ Return one of:
 - remaining ranked hypotheses and the next discriminating experiment, including access or approval needed.
 
 Recommend the next intent and stop for approval. Never alter code during `investigation`.
+
+Report in short plain sentences: the answer first, then the evidence. Name a file or symbol only when the reader needs it to act. Listing paths before the reader confirms the problem sends them into the wrong code.

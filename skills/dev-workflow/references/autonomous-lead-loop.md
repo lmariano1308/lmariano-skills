@@ -19,6 +19,23 @@ The lead owns intent, scope, sequencing, delegation, evidence, and the final ver
 9. **Fix** — if findings block completion, authorize a separate correction pass. Any mutation invalidates prior review and check evidence; capture the new identity and rerun the affected gates.
 10. **Close** — apply `completion-gate`, state the exact permitted claim, list gaps, preserve evidence, and recommend the next intent. Do not silently transition into the next mission.
 
+## Profile-routed code-change pipeline
+
+When the user approves implementation and advanced delegation is active (`profile_routes`):
+
+1. Lead verifies the worktree, branch, base, and dirty paths; fixes the PR base before spawning (see the `github` PR workflow).
+2. Spawn one `implementer` via `delegate_task` with `profile: implementer`, the approved plan, exact paths, acceptance criteria, test commands, and the no-commit/no-push/no-deploy boundary. Require changed files plus exact command outputs.
+3. Lead reads the diff and repairs any deviation the child reported before review — especially broken doc links and provenance claims.
+4. Spawn `qa` and `reviewer` in parallel via `delegate_task` (`profile: qa` / `profile: reviewer`) on the same fixed worktree; neither edits. QA runs the acceptance commands; reviewer reads the diff against the plan.
+5. If either requests changes, run a separate correction pass; any mutation invalidates prior QA/review evidence, so rerun both.
+6. Lead runs the final checks, commits, pushes, and opens the PR to the approved base. Commit/push/PR stay outside the child's scope unless explicitly delegated.
+
+## Reinspecting delegated output
+
+- A child's report is a claim, not evidence. Read the diff and run the commands yourself before accepting completion.
+- For documentation, verify every linked path exists and every "revalidated"/"verified" provenance claim has a command, diff, or timestamp behind it. Subagents often copy a stale reference or claim a revalidation they did not perform.
+- Keep the parent as the only actor at external gates (commit, push, PR, deploy) unless the approval explicitly includes those actions in the child's task.
+
 ## Autonomy guardrails
 
 The lead may read, classify, plan, delegate bounded investigation, and combine skills without micro-approval. It must stop for:
