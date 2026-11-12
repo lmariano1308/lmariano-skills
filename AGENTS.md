@@ -10,7 +10,8 @@ This repository publishes a small, portable Agent Skills foundation.
 - Preserve progressive disclosure: essential procedure in `SKILL.md`, task-specific detail in directly linked `references/` or `assets/` files.
 - Do not add installation, publishing, commit, push, deploy, restart, migration execution, remote write, or dependency-install side effects to a skill.
 - Treat production as read-only. Require explicit approval for code changes and every operational or destructive action.
-- Keep secrets, tokens, passwords, PII, and sensitive payloads out of examples and reports.
+- Keep secrets, tokens, passwords, PII, and sensitive payloads out of examples and reports. Never name internal repositories, services, schemas, hosts, queues, clients, or credentials of an employer.
+- Keep the demonstration offline: no network, no credential, no database, standard library only. Any capability the demo does not actually use must be declared as unused in `docs/workflow-demo.md`.
 
 ## Changes
 

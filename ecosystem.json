@@ -1,22 +1,135 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "name": "lmariano-engineering-foundation",
   "license": "MIT",
+  "areas": ["workflow", "front-end", "motion", "design", "back-end", "review", "visual-qa"],
   "skills": [
-    {"name": "dev-workflow", "path": "skills/dev-workflow", "capabilities": ["intent-routing", "product-track-routing", "autonomous-lead-loop", "mutation-aware-lifecycle", "quality-contract-discovery", "safety-gating"]},
-    {"name": "repo-context", "path": "skills/repo-context", "capabilities": ["repository-mapping", "symbol-tracing", "evidence-synthesis"]},
-    {"name": "investigation", "path": "skills/investigation", "capabilities": ["debugging", "root-cause-analysis", "experiment-design"]},
-    {"name": "prd", "path": "skills/prd", "capabilities": ["product-discovery", "requirements-synthesis", "tracer-bullet-planning"]},
-    {"name": "review-gate", "path": "skills/review-gate", "capabilities": ["immutable-target-review", "spec-review", "standards-review", "verification-review", "risk-based-security-review"]},
-    {"name": "completion-gate", "path": "skills/completion-gate", "capabilities": ["fail-closed-completion-gating", "target-bound-evidence-verification"]}
+    {
+      "name": "dev-workflow",
+      "path": "skills/dev-workflow",
+      "area": "workflow",
+      "capabilities": ["intent-routing", "product-track-routing", "autonomous-lead-loop", "mutation-aware-lifecycle", "quality-contract-discovery", "safety-gating"],
+      "evidence": [
+        {"project": "Hermes profile (private operator profile)", "date": "2026-11-09", "ref": "skills usage ledger", "result": "33 recorded uses since 2026-10-15; last recorded on 2026-11-09 as the entry point of routed chains"}
+      ]
+    },
+    {
+      "name": "repo-context",
+      "path": "skills/repo-context",
+      "area": "workflow",
+      "capabilities": ["repository-mapping", "symbol-tracing", "evidence-synthesis"],
+      "evidence": [
+        {"project": "oficina-sistema (private Go product)", "date": "2026-10-26", "ref": "docs/contracts/fatia21-financeiro-custos-fixos.md", "result": "the contract traces schema, routes and invariants to the source plan and handoff sections; 7 recorded uses, last 2026-10-29"}
+      ]
+    },
+    {
+      "name": "investigation",
+      "path": "skills/investigation",
+      "area": "workflow",
+      "capabilities": ["debugging", "root-cause-analysis", "experiment-design"],
+      "evidence": [
+        {"project": "lmariano-skills (this repository)", "date": "2026-11-12", "ref": "scripts/run_demo.py step 3", "result": "red-capable loop observed: exit 1 with 2 failures before the change, exit 0 after it; 3 recorded uses in the operator profile"}
+      ]
+    },
+    {
+      "name": "prd",
+      "path": "skills/prd",
+      "area": "workflow",
+      "capabilities": ["product-discovery", "requirements-synthesis", "tracer-bullet-planning"],
+      "evidence": [
+        {"project": "oficina-sistema (private Go product)", "date": "2026-10-26", "ref": "docs/contracts/fatia21-financeiro-custos-fixos.md, commit f3a5e67", "result": "decision-ready requirements with routes, invariants and acceptance criteria committed before implementation; the skill has no separate usage-ledger record"}
+      ]
+    },
+    {
+      "name": "review-gate",
+      "path": "skills/review-gate",
+      "area": "review",
+      "capabilities": ["immutable-target-review", "spec-review", "standards-review", "verification-review", "risk-based-security-review"],
+      "evidence": [
+        {"project": "oficina-sistema (private Go product)", "date": "2026-09-18", "ref": "a1f4e00", "result": "findings from a multi-model review applied as one bounded UI and copy commit; 7 recorded uses in the operator profile"}
+      ]
+    },
+    {
+      "name": "completion-gate",
+      "path": "skills/completion-gate",
+      "area": "workflow",
+      "capabilities": ["fail-closed-completion-gating", "target-bound-evidence-verification"],
+      "evidence": [
+        {"project": "oficina-sistema (private Go product)", "date": "2026-10-26", "ref": "f3a5e67", "result": "slice evidence document records each gate command and its result before the completion claim; 7 recorded uses in the operator profile"}
+      ]
+    },
+    {
+      "name": "frontend-delivery",
+      "path": "skills/frontend-delivery",
+      "area": "front-end",
+      "capabilities": ["prototype-first", "sectioned-delivery", "token-discipline", "browser-verification"],
+      "evidence": [
+        {"project": "ryve-landing (private Vite + React landing)", "date": "2026-11-06", "ref": "8f0e019", "result": "hero delivered as one section with masked line motion; src/sections/Hero.tsx and src/layout.css, 364 insertions"},
+        {"project": "ryve-landing (private Vite + React landing)", "date": "2026-11-06", "ref": "30c2665", "result": "SectionShell, Button and SpotlightSurface aligned to a 4 px grid before the remaining sections"}
+      ]
+    },
+    {
+      "name": "motion-design",
+      "path": "skills/motion-design",
+      "area": "motion",
+      "capabilities": ["motion-budget-selection", "scroll-choreography", "reduced-motion", "frame-budget"],
+      "evidence": [
+        {"project": "brandt-landing (client landing, authorized public case)", "date": "2026-10-05", "ref": "3d8f410", "result": "GSAP reveal scoped by gsap.matchMedia in src/hooks/useSectionReveal.ts, shipped with an end-to-end Playwright suite"},
+        {"project": "lucasmariano-site (private portfolio)", "date": "2026-11-11", "ref": "c07fabf", "result": "shared motion runtime in src/motion/runtime.ts and route transition hook, used by the redesigned home"}
+      ]
+    },
+    {
+      "name": "design-direction",
+      "path": "skills/design-direction",
+      "area": "design",
+      "capabilities": ["direction-board", "reference-extraction", "brand-package", "measured-palette"],
+      "evidence": [
+        {"project": "ryve-landing (private Vite + React landing)", "date": "2026-11-06", "ref": "docs/qa/AVALIACAO-MARCA.md", "result": "twelve measured defects with file:line and one chosen identity territory, documented before migration"},
+        {"project": "lucasmariano-site (private portfolio)", "date": "2026-11-11", "ref": "c07fabf", "result": "redesign delivered as a chosen direction with brand artifacts and theme tokens in one commit"}
+      ]
+    },
+    {
+      "name": "backend-delivery",
+      "path": "skills/backend-delivery",
+      "area": "back-end",
+      "capabilities": ["slice-contract", "migration-rollback", "scoped-store", "money-and-time-rules", "gate-evidence"],
+      "evidence": [
+        {"project": "oficina-sistema (private Go product)", "date": "2026-10-26", "ref": "f3a5e67", "result": "slice 21 contract with migration 0025, reversible down, routes and a gate table before delivery"},
+        {"project": "oficina-sistema (private Go product)", "date": "2026-11-09", "ref": "0939dd2", "result": "document counter fixed to stop duplicate numbering; go test and build green in the same slice"}
+      ]
+    },
+    {
+      "name": "review-triage",
+      "path": "skills/review-triage",
+      "area": "review",
+      "capabilities": ["fixed-target-review", "finding-triage", "proof-requirement", "rerun-loop"],
+      "evidence": [
+        {"project": "oficina-sistema (private Go product)", "date": "2026-09-16", "ref": "59ad6ea", "result": "43 unique findings from a 23-file review triaged and fixed on a separate branch"},
+        {"project": "oficina-sistema (private Go product)", "date": "2026-09-18", "ref": "docs/ocr-review-2e24f4f-RESUMO.md", "result": "70 comments summarized by category and severity, with the raw JSON kept as an artifact"}
+      ]
+    },
+    {
+      "name": "visual-qa",
+      "path": "skills/visual-qa",
+      "area": "visual-qa",
+      "capabilities": ["measured-visual-checks", "contrast-audit", "both-themes", "evidence-packaging"],
+      "evidence": [
+        {"project": "oficina-sistema (private Go product)", "date": "2026-10-26", "ref": "eb6b0f5", "result": "scripts/qa-visual-conta-giros.py measures overflow, WCAG contrast, touch targets and console errors at 1440 and 390, both themes"},
+        {"project": "ryve-landing (private Vite + React landing)", "date": "2026-11-06", "ref": "docs/qa/AVALIACAO-MARCA.md at HEAD 9df24b8", "result": "measured pass: real build, page served locally, headless capture at 1440 and 390, DOM measurement, twelve defects each with file:line"}
+      ]
+    }
   ],
   "optional_capabilities": {
-    "backend-go": {"preferred": ["go-engineering"], "fallback": "repository rules and native project commands"},
-    "frontend-angular": {"preferred": ["angular"], "fallback": "repository rules and native project commands"},
+    "backend-go": {"preferred": ["backend-delivery"], "fallback": "repository rules and native project commands"},
+    "frontend-angular": {"preferred": ["frontend-delivery"], "fallback": "repository rules and native project commands"},
+    "frontend-react": {"preferred": ["frontend-delivery"], "fallback": "repository rules and native project commands"},
+    "motion": {"preferred": ["motion-design"], "fallback": "native CSS transitions and scroll behavior"},
+    "design-direction": {"preferred": ["design-direction"], "fallback": "repository tokens and an approved static direction"},
+    "code-review": {"preferred": ["review-triage"], "fallback": "manual diff review with a written finding ledger"},
+    "visual-validation": {"preferred": ["visual-qa"], "fallback": "available local browser or manual evidence supplied by the user"},
     "mongo": {"preferred": ["mongodb"], "fallback": "repository rules and native project commands"},
     "postgres": {"preferred": ["postgresql"], "fallback": "repository rules and native project commands"},
-    "redis": {"preferred": ["redis"], "fallback": "repository rules and native project commands"},
-    "visual-validation": {"preferred": ["webapp-testing"], "fallback": "available local browser or manual evidence supplied by the user"}
+    "redis": {"preferred": ["redis"], "fallback": "repository rules and native project commands"}
   },
   "upstream_complements": [
     {"name": "grilling", "source": "mattpocock/skills", "role": "optional discovery questioning"},

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parcelas — serviço de exemplo</title>
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --surface: #ffffff;
+    --surface-2: #ece7dc;
+    --ink: #121110;
+    --ink-2: #5c5750;
+    --border: rgba(18, 17, 16, 0.14);
+    --accent: #c8102e;
+    --radius: 12px;
+    --control-h: 44px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 20px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  main { max-width: 560px; margin: 0 auto; }
+  h1 { font-size: 28px; line-height: 1.2; font-weight: 650; margin: 0 0 8px; }
+  p.lead { color: var(--ink-2); margin: 0 0 24px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  dl { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; margin: 0 0 20px; }
+  dt { color: var(--ink-2); }
+  dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .total { border-top: 1px solid var(--border); padding-top: 12px; font-weight: 650; }
+  button {
+    min-height: var(--control-h);
+    width: 100%;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 550;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  @media (max-width: 420px) {
+    body { padding: 20px 16px; }
+    h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Parcelas do pedido</h1>
+  <p class="lead">Três parcelas iguais; a última absorve o resto em centavos.</p>
+  <section class="card" aria-labelledby="resumo">
+    <h2 id="resumo" hidden>Resumo</h2>
+    <dl>
+      <dt>Parcela 1</dt><dd>R$ 33,33</dd>
+      <dt>Parcela 2</dt><dd>R$ 33,33</dd>
+      <dt>Parcela 3</dt><dd>R$ 33,34</dd>
+      <dt class="total">Total</dt><dd class="total">R$ 100,00</dd>
+    </dl>
+    <button type="button">Confirmar parcelamento</button>
+  </section>
+</main>
+</body>
+</html>

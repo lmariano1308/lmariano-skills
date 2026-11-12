@@ -18,6 +18,14 @@ from typing import Callable
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE_DIR = ROOT / "evals" / "fixtures"
 CATALOG_PATH = ROOT / "ecosystem.json"
+CORE_SKILLS = {
+    "dev-workflow",
+    "repo-context",
+    "investigation",
+    "prd",
+    "review-gate",
+    "completion-gate",
+}
 VERDICTS = {"pass", "conditional", "fail", "insufficient_evidence"}
 SAFE_READINESS_VERDICTS = {"fail", "insufficient_evidence"}
 CHECK_STATUSES = {"passed", "failed", "timeout", "skipped", "unavailable"}
@@ -1121,8 +1129,8 @@ def _validate_live_skill_paths(paths: list[Path]) -> list[Path]:
     except (OSError, json.JSONDecodeError) as error:
         raise TranscriptError(f"cannot read skill catalog: {error}") from error
     skills = catalog.get("skills")
-    if not isinstance(skills, list) or len(skills) != 6:
-        raise TranscriptError("live eval requires the six-skill catalog")
+    if not isinstance(skills, list) or CORE_SKILLS - {entry.get("name") for entry in skills if isinstance(entry, dict)}:
+        raise TranscriptError("live eval requires the catalog with every core skill")
     declared: dict[Path, str] = {}
     for entry in skills:
         if not isinstance(entry, dict) or not isinstance(entry.get("name"), str):
@@ -1137,8 +1145,8 @@ def _validate_live_skill_paths(paths: list[Path]) -> list[Path]:
             raise TranscriptError("catalog skill path escapes repository") from error
         declared[resolved] = entry["name"]
     resolved_paths = [path.resolve() for path in paths]
-    if len(resolved_paths) != 6 or len(set(resolved_paths)) != 6:
-        raise TranscriptError("live eval requires exactly six distinct skill directories")
+    if len(resolved_paths) != len(declared) or len(set(resolved_paths)) != len(declared):
+        raise TranscriptError("live eval requires every distinct skill directory declared in the catalog")
     if set(resolved_paths) != set(declared):
         raise TranscriptError("live skill paths must exactly match ecosystem.json")
     for resolved in resolved_paths:

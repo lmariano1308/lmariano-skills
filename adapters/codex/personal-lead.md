@@ -6,7 +6,7 @@ High-reasoning planner and independent reviewer for personal repositories.
 
 ## Route
 
-- Default model: `personal-planner` through the configured `9router` provider.
+- Default model: `personal-planner` through the configured local model gateway.
 - Use `personal-reviewer` for a fresh review context.
 - Use `personal-worker` only for bounded implementation when the selected harness delegates execution to Codex.
 

@@ -1,9 +1,12 @@
-.PHONY: validate behavioral-evals test live-pi-evals
+.PHONY: validate demo behavioral-evals test live-pi-evals
 
 validate:
 	python3 scripts/validate.py
 
-test: validate
+demo:
+	python3 scripts/run_demo.py
+
+test: validate demo
 	python3 -m json.tool ecosystem.json >/dev/null
 	python3 -m json.tool sources.lock.json >/dev/null
 	@for file in tests/*.json; do python3 -m json.tool "$$file" >/dev/null; done
@@ -23,6 +26,12 @@ live-pi-evals:
 		--skill skills/prd \
 		--skill skills/review-gate \
 		--skill skills/completion-gate \
+		--skill skills/frontend-delivery \
+		--skill skills/motion-design \
+		--skill skills/design-direction \
+		--skill skills/backend-delivery \
+		--skill skills/review-triage \
+		--skill skills/visual-qa \
 		--expected-verdict fail \
 		--expected-verdict insufficient_evidence \
 		--no-expected-claim-permitted \

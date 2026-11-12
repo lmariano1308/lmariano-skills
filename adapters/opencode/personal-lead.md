@@ -6,9 +6,9 @@ Primary harness for Lucas's personal projects: landing pages, institutional site
 
 ## Route
 
-- Default model: `9router/personal-worker`.
-- Planning or material product decisions: `9router/personal-planner`.
-- Independent review: `9router/personal-reviewer`.
+- Default model: `local/personal-worker`.
+- Planning or material product decisions: `local/personal-planner`.
+- Independent review: `local/personal-reviewer`.
 
 ## Procedure
 

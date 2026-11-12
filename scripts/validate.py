@@ -42,6 +42,17 @@ REQUIRED_COMPOSITION_CASES = {
     "dirty-worktree-preservation",
     "transport-e2e-scope",
 }
+CORE_SKILLS = {
+    "dev-workflow",
+    "repo-context",
+    "investigation",
+    "prd",
+    "review-gate",
+    "completion-gate",
+}
+AREAS = {"workflow", "front-end", "motion", "design", "back-end", "review", "visual-qa"}
+EVIDENCE_FIELDS = {"project", "date", "ref", "result"}
+DEMO_FILES = ("docs/workflow-demo.md", "examples/rounding-service/README.md", "scripts/run_demo.py")
 MAX_SKILL_LINES = 220
 MIN_DESCRIPTION_LENGTH = 120
 PLACEHOLDERS = ("TO" + "DO", "T" + "BD", "FIX" + "ME")
@@ -63,9 +74,10 @@ class Validation:
                 print(f"- {error}")
             return 1
         print(
-            "Structural validation passed: manifest, 6 skills, frontmatter, links, "
-            "references, routing/composition fixtures, placeholders, and size limits. "
-            "Behavioral evals were not executed."
+            "Structural validation passed: manifest, core skills plus declared "
+            "capability skills, area and evidence records, frontmatter, links, "
+            "references, demo files, routing/composition fixtures, placeholders, "
+            "and size limits. Behavioral evals were not executed."
         )
         return 0
 
@@ -127,14 +139,47 @@ def validate_manifest(validation: Validation) -> tuple[dict[str, Any], list[dict
     if not isinstance(skills, list):
         validation.error("ecosystem.json must contain a skills array")
         return manifest, []
-    if len(skills) != 6:
-        validation.error(f"ecosystem.json must declare exactly 6 skills, found {len(skills)}")
+    declared = [entry.get("name") for entry in skills if isinstance(entry, dict)]
+    missing_core = CORE_SKILLS - set(declared)
+    if missing_core:
+        validation.error(f"ecosystem.json is missing core skills: {sorted(missing_core)}")
+    if len(skills) < len(CORE_SKILLS):
+        validation.error(
+            f"ecosystem.json must declare at least the {len(CORE_SKILLS)} core skills, found {len(skills)}"
+        )
+    areas = manifest.get("areas")
+    if not isinstance(areas, list) or not set(areas) <= AREAS:
+        validation.error(f"ecosystem.json areas must be a subset of {sorted(AREAS)}")
+    elif set(areas) != AREAS:
+        validation.error(f"ecosystem.json must declare every supported area: {sorted(AREAS)}")
     return manifest, [entry for entry in skills if isinstance(entry, dict)]
+
+
+def validate_evidence(name: Any, evidence: Any, validation: Validation) -> None:
+    """Every declared skill carries at least one dated, attributable evidence record."""
+    if not isinstance(evidence, list) or not evidence:
+        validation.error(f"skill {name!r} needs at least one evidence record")
+        return
+    for item in evidence:
+        if not isinstance(item, dict):
+            validation.error(f"evidence entries for {name!r} must be objects")
+            continue
+        missing = EVIDENCE_FIELDS - item.keys()
+        if missing:
+            validation.error(f"evidence for {name!r} is missing {sorted(missing)}")
+            continue
+        empty = sorted(field for field in EVIDENCE_FIELDS if not str(item.get(field) or "").strip())
+        if empty:
+            validation.error(f"evidence for {name!r} has empty {empty}")
+        date = str(item.get("date") or "")
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            validation.error(f"evidence date for {name!r} must be YYYY-MM-DD, found {date!r}")
 
 
 def validate_skills(skills: list[dict[str, Any]], validation: Validation) -> None:
     names: list[str] = []
     declared_dirs: set[Path] = set()
+    areas_seen: set[str] = set()
     for entry in skills:
         name = entry.get("name")
         relative_path = entry.get("path")
@@ -170,9 +215,19 @@ def validate_skills(skills: list[dict[str, Any]], validation: Validation) -> Non
             validation.error(f"description exceeds 1024 characters in {skill_path.relative_to(ROOT)}")
         if fields.get("license") != "MIT":
             validation.error(f"license must be MIT in {skill_path.relative_to(ROOT)}")
+        area = entry.get("area")
+        if area not in AREAS:
+            validation.error(f"skill {name!r} needs an area from {sorted(AREAS)}")
+        else:
+            areas_seen.add(area)
+        validate_evidence(name, entry.get("evidence"), validation)
         line_count = len(text.splitlines())
         if line_count > MAX_SKILL_LINES:
             validation.error(f"main skill is too large ({line_count} > {MAX_SKILL_LINES} lines): {skill_path.relative_to(ROOT)}")
+
+    missing_areas = AREAS - areas_seen
+    if missing_areas:
+        validation.error(f"no skill covers these areas: {sorted(missing_areas)}")
 
     duplicate_names = sorted({name for name in names if names.count(name) > 1})
     if duplicate_names:
@@ -290,6 +345,12 @@ def validate_composition(manifest: dict[str, Any], validation: Validation) -> No
         validation.error("every optional capability needs an explicit fallback")
 
 
+def validate_demo(validation: Validation) -> None:
+    for relative in DEMO_FILES:
+        if not (ROOT / relative).is_file():
+            validation.error(f"missing demonstration file: {relative}")
+
+
 def validate_all_json(validation: Validation) -> None:
     for path in ROOT.rglob("*.json"):
         if ".git" not in path.parts and "logs" not in path.parts:
@@ -305,6 +366,7 @@ def main() -> int:
     validate_placeholders(validation)
     validate_routing(validation)
     validate_composition(manifest, validation)
+    validate_demo(validation)
     validate_all_json(validation)
     return validation.report()
 
