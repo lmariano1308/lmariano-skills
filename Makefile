@@ -1,4 +1,4 @@
-.PHONY: validate demo behavioral-evals test live-pi-evals
+.PHONY: validate demo behavioral-evals test live-evals
 
 validate:
 	python3 scripts/validate.py
@@ -18,7 +18,7 @@ behavioral-evals:
 	python3 -m unittest discover -s tests -p 'test_*.py'
 	python3 evals/pi_eval.py
 
-live-pi-evals:
+live-evals:
 	python3 evals/pi_eval.py --live \
 		--skill skills/dev-workflow \
 		--skill skills/repo-context \
@@ -26,10 +26,10 @@ live-pi-evals:
 		--skill skills/prd \
 		--skill skills/review-gate \
 		--skill skills/completion-gate \
-		--skill skills/frontend-delivery \
-		--skill skills/motion-design \
+		--skill skills/frontend \
+		--skill skills/motion \
 		--skill skills/design-direction \
-		--skill skills/backend-delivery \
+		--skill skills/backend \
 		--skill skills/review-triage \
 		--skill skills/visual-qa \
 		--expected-verdict fail \

@@ -24,7 +24,7 @@ request: A soma das tres parcelas nao fecha com o total. O defeito esta confirma
 
 [1/7] CLASSIFY — dev-workflow
 ------------------------------------------------------------------------
-Intent: bugfix · Skills: investigation → backend-delivery → review-gate → visual-qa → completion-gate · Mode: quick
+Intent: bugfix · Skills: investigation → backend → review-gate → visual-qa → completion-gate · Mode: quick
 observed state: a failing test proves the defect; approval covers the correction.
 
 [2/7] CONTEXT — repo-context
@@ -116,7 +116,7 @@ workspace removed (pass --keep to inspect it)
 |---|---|---|
 | 1 | `dev-workflow` routing | The intent is announced before work, with the chain and the mode. A confirmed defect with a failing test enters `bugfix`, not `hotfix`. |
 | 2 | `repo-context` | The map is task-scoped: six files, one symbol traced from definition to callers, no repository inventory. |
-| 3 | `investigation` (feedback loop) and `backend-delivery` | The loop is red before the change and green after it. The failure is observed, not assumed. |
+| 3 | `investigation` (feedback loop) and `backend` | The loop is red before the change and green after it. The failure is observed, not assumed. |
 | 4 | `review-gate` | The review is bound to `sha256(diff)`, not to a branch name. Axes are separate; security is explicitly not triggered instead of silently skipped. |
 | 5 | `visual-qa` | The pass is measured and labelled `static`. Nothing rendered, so no stronger claim is made. |
 | 6 | `completion-gate` | Every claim maps to a fresh command, a scope, and an exit result. The target identity is recomputed and must still match the reviewed one. |

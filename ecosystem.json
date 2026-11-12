@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "name": "lmariano-engineering-foundation",
+  "name": "skills",
   "license": "MIT",
   "areas": ["workflow", "front-end", "motion", "design", "back-end", "review", "visual-qa"],
   "skills": [
@@ -59,8 +59,8 @@
       ]
     },
     {
-      "name": "frontend-delivery",
-      "path": "skills/frontend-delivery",
+      "name": "frontend",
+      "path": "skills/frontend",
       "area": "front-end",
       "capabilities": ["prototype-first", "sectioned-delivery", "token-discipline", "browser-verification"],
       "evidence": [
@@ -69,8 +69,8 @@
       ]
     },
     {
-      "name": "motion-design",
-      "path": "skills/motion-design",
+      "name": "motion",
+      "path": "skills/motion",
       "area": "motion",
       "capabilities": ["motion-budget-selection", "scroll-choreography", "reduced-motion", "frame-budget"],
       "evidence": [
@@ -89,8 +89,8 @@
       ]
     },
     {
-      "name": "backend-delivery",
-      "path": "skills/backend-delivery",
+      "name": "backend",
+      "path": "skills/backend",
       "area": "back-end",
       "capabilities": ["slice-contract", "migration-rollback", "scoped-store", "money-and-time-rules", "gate-evidence"],
       "evidence": [
@@ -120,10 +120,10 @@
     }
   ],
   "optional_capabilities": {
-    "backend-go": {"preferred": ["backend-delivery"], "fallback": "repository rules and native project commands"},
-    "frontend-angular": {"preferred": ["frontend-delivery"], "fallback": "repository rules and native project commands"},
-    "frontend-react": {"preferred": ["frontend-delivery"], "fallback": "repository rules and native project commands"},
-    "motion": {"preferred": ["motion-design"], "fallback": "native CSS transitions and scroll behavior"},
+    "backend-go": {"preferred": ["backend"], "fallback": "repository rules and native project commands"},
+    "frontend-angular": {"preferred": ["frontend"], "fallback": "repository rules and native project commands"},
+    "frontend-react": {"preferred": ["frontend"], "fallback": "repository rules and native project commands"},
+    "motion": {"preferred": ["motion"], "fallback": "native CSS transitions and scroll behavior"},
     "design-direction": {"preferred": ["design-direction"], "fallback": "repository tokens and an approved static direction"},
     "code-review": {"preferred": ["review-triage"], "fallback": "manual diff review with a written finding ledger"},
     "visual-validation": {"preferred": ["visual-qa"], "fallback": "available local browser or manual evidence supplied by the user"},

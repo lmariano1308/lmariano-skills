@@ -1,5 +1,7 @@
 # Scroll choreography
 
+Platform examples first. The runtime example at the end is a shape, not a dependency: any library that can animate a node and read scroll progress fits it.
+
 ## Line reveal, CSS only
 
 ```css
@@ -47,30 +49,38 @@ Rules that make it usable:
 - Cards inside the track stay focusable in DOM order. A keyboard user tabbing through a translated track must not be scrolled somewhere unexpected.
 - The fallback is a real vertical list, not a disabled section.
 
-## GSAP with ReducedMotion
+## Runtime reveal with reduced motion
 
-```ts
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+The scope owns the initial state, the media listener, and the cleanup. The timeline is injected, so the same function works with whatever runtime the project already ships.
 
-gsap.registerPlugin(ScrollTrigger);
+```js
+export function sectionReveal(root, mountTimeline) {
+  const items = [...root.querySelectorAll("[data-reveal]")];
+  const media = window.matchMedia("(prefers-reduced-motion: no-preference)");
+  let cleanup = null;
 
-export function sectionReveal(root: HTMLElement): () => void {
-  const media = gsap.matchMedia();
-  media.add("(prefers-reduced-motion: no-preference)", () => {
-    const items = root.querySelectorAll<HTMLElement>("[data-reveal]");
-    gsap.fromTo(items, { y: 24, opacity: 0 }, {
-      y: 0, opacity: 1, duration: 0.55, ease: "power2.out", stagger: 0.07,
-      scrollTrigger: { trigger: root, start: "top 75%", once: true },
-    });
-  });
-  return () => media.revert();
+  const stop = () => {
+    if (cleanup) cleanup();
+    cleanup = null;
+    items.forEach((node) => node.removeAttribute("style"));
+  };
+  const sync = () => {
+    stop();
+    if (media.matches) cleanup = mountTimeline(items) ?? null;
+  };
+
+  media.addEventListener("change", sync);
+  sync();
+  return () => {
+    media.removeEventListener("change", sync);
+    stop();
+  };
 }
 ```
 
-- `matchMedia` scopes the timeline to the preference and `revert()` removes it. Without the cleanup the timeline survives navigation.
-- When the initial state is set by the animation library, a blocked or failed script leaves content at its natural position. That is the difference between a degraded page and a blank one.
-- One `ScrollTrigger` per section. A trigger per card multiplies listener cost and makes the timeline impossible to reason about.
+- The media query scopes the timeline to the preference; the returned teardown removes it. Without cleanup the timeline survives navigation.
+- Because the initial state is set inside the scope, a blocked or failed script leaves content at its natural position. That is the difference between a degraded page and a blank one.
+- One trigger per section. A trigger per card multiplies listener cost and makes the timeline impossible to reason about.
 
 ## Frame budget
 

@@ -23,14 +23,12 @@ Keep prototypes outside the repository: they must not pollute the branch, the bu
 
 ## Serve and check
 
-```sh
-python3 -m http.server 8765 --bind localhost
-```
+Serve the directory over HTTP on the loopback interface with whatever static server the machine already has; most language runtimes ship one. Record the port you used.
 
 Then, before sending a link:
 
 1. Confirm `200` on `index.html` and on every direction page.
-2. Screenshot each page headless and inspect the screenshots.
+2. Capture each page in a browser engine and inspect the captures.
 3. Confirm no direction relies on a font that failed to load and no iframe is blank.
 
 ## Rules that keep the comparison useful

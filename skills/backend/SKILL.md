@@ -1,8 +1,8 @@
 ---
-name: backend-delivery
-description: "Deliver a backend capability as one verifiable slice: contract, migration with rollback, store, routes, tests, and evidence. Use when the request is 'implementa no backend', 'faz a fatia', 'cria a rota', 'adiciona a migration', 'fecha o financeiro no Go', or when a data model change must ship with a rollback path and gate evidence. Do not use for read-only investigation, for schema changes without rollback, or to deploy without approval."
+name: backend
+description: "Deliver a backend capability as one verifiable slice: contract, migration with rollback, store, routes, tests, and evidence. Use when the request is 'implementa no backend', 'faz a fatia', 'cria a rota', 'adiciona a migration', 'fecha o financeiro', or when a data model change must ship with a rollback path and gate evidence. Do not use for read-only investigation, for schema changes without rollback, or to deploy without approval."
 license: MIT
-compatibility: "Go service with SQL migrations and a native test command; the slice contract applies to any language with migrations."
+compatibility: "Any language with versioned migrations and a native test command. The contract is language-agnostic; SQL migrations are the reference, not a requirement."
 ---
 
 # Backend delivery

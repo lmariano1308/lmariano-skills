@@ -38,12 +38,10 @@ prototypes/<project>-directions/
 
 ## Capture protocol
 
-```sh
-python3 -m http.server 8765 --bind localhost
-```
+Serve the directory on loopback with whatever static server the machine has, then:
 
 1. `200` on every page.
-2. Headless screenshot of each direction at 1440 and 390.
+2. Capture each direction at 1440 and 390.
 3. Look at both widths before sending the link. A direction that collapses on mobile is not a direction.
 4. Keep the captures under `captures/` so the decision has evidence later.
 

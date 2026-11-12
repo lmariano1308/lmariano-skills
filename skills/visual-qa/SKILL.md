@@ -2,7 +2,7 @@
 name: visual-qa
 description: "Measure a web interface instead of trusting a glance: overflow, WCAG contrast, touch targets, console errors, both themes, desktop and mobile. Use when the request is 'faz o QA visual', 'testa no browser', 'olha como ficou no celular', 'valida o contraste', or before shipping a landing or an application slice. Do not use as a substitute for functional tests, or to report a defect without file, measurement, and reproduction."
 license: MIT
-compatibility: "Headless browser when available; the offline checks work from HTML and CSS alone."
+compatibility: "A browser engine you can drive, when one is available; the offline checks work from HTML and CSS alone. No automation library is required."
 ---
 
 # Visual QA
@@ -17,6 +17,10 @@ compatibility: "Headless browser when available; the offline checks work from HT
 4. Exit non-zero when a blocking check fails, so the gate can consume it.
 
 The full check list, thresholds, and the offline fallback: [measured-checks.md](references/measured-checks.md).
+
+## Tooling is not part of the contract
+
+The checks are described in platform terms: a rendered document, its computed styles, its console, and its network log. Any driver that exposes those satisfies the skill — a browser automation library, a harness plugin, or a hand-run pass with the tooling already installed. Name the driver you used in the report; never make it a prerequisite for the reader.
 
 ## What to measure
 

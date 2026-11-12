@@ -1,8 +1,8 @@
 ---
-name: frontend-delivery
-description: "Deliver front-end work one section at a time against a live prototype and a measured visual bar. Use when the request is 'faz a seção', 'implementa o front', 'ajusta esse componente', 'monta a página', 'refaz o hero', or when a React or Vite interface must match an approved direction. Do not use for backend-only work, for a whole-page rewrite in one pass, or to commit without explicit approval."
+name: frontend
+description: "Deliver front-end work one section at a time against a live prototype and a measured visual bar. Use when the request is 'faz a seção', 'implementa o front', 'ajusta esse componente', 'monta a página', 'refaz o hero', or when an existing interface must be brought to an approved direction. Do not use for backend-only work, for a whole-page rewrite in one pass, or to commit without explicit approval."
 license: MIT
-compatibility: "Repository with a local dev server and a headless browser; React and Vite are examples, not requirements."
+compatibility: "Any repository with a way to serve a page and an engine to render it. No framework, bundler, or design tool is required."
 ---
 
 # Front-end delivery
@@ -22,10 +22,14 @@ When the direction is not settled, build the page outside the repository first. 
 
 1. Produce two or three directions as standalone HTML pages with real fonts, the real palette, and real motion. A wireframe or a static mockup is not a direction.
 2. Serve them from one local HTTP server and check that every page answers `200` before sharing a link.
-3. Screenshot each direction headless and look at the screenshots before sending the link.
+3. Capture each direction in a browser engine and look at the captures before sending the link.
 4. Ask exactly one closing question with options. If none fits, ask which part of which fits.
 
 Do not start repository edits while the direction is still open.
+
+## Tooling is not part of the contract
+
+No product is named in this skill. Serving, rendering, capturing, and measuring are capabilities; use whatever the machine or the repository already provides and say which one you used. A skill that requires a specific tool is a skill nobody else can run.
 
 ## Build in slices
 

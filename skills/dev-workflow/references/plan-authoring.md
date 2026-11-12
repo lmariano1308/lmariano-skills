@@ -33,9 +33,9 @@ Never write a function call into a plan from memory. Grep the definition and
 copy the signature:
 
 ```bash
-grep -rnE "^func (New|Start|Stop|Init)" pkg/ libs/ | head -20
-grep -n "func (s \*Server) Stop" pkg/health/server.go
-grep -nE "^func \(db \*Database\)" libs/connections/postgres/postgres.go
+grep -rnE "^func (New|Start|Stop|Init)" . | head -20
+grep -n "func (s \*Server) Stop" path/to/server.go
+grep -nE "^func \(db \*Database\)" path/to/store.go
 ```
 
 Then put the result in the *Verified signatures* table. This catches the class

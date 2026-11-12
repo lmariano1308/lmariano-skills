@@ -1,40 +1,53 @@
-# Engineering Agent Skills Foundation
+# skills
 
-A portable, skills-first foundation for evidence-driven engineering work. It routes a task by intent, loads only the capabilities needed, protects write and production boundaries, and requires fresh evidence before completion claims.
+Portable engineering skills for AI coding agents. Six of them are the portfolio set; six more support the workflow behind them. Every one of them runs in any harness and does not require any particular library.
 
-**Resumo PT-BR:** doze skills portáteis — seis de fluxo e seis de capacidade — para coordenar engenharia, entender repositórios, investigar falhas, sintetizar PRDs, entregar front-end, motion, design, back-end, revisar mudanças e validar conclusão com QA visual medido. Produção é sempre read-only; mudanças exigem aprovação explícita.
+**Resumo PT-BR:** skills portáteis para agentes de código — investigar, front-end, motion, direção de design, back-end e QA visual. Nenhuma skill exige ferramenta, framework ou harness específico; cada uma descreve a capacidade de que precisa e usa o que o projeto já tem.
 
-Every declared skill carries a dated evidence record in [`ecosystem.json`](ecosystem.json): the project where it ran, the commit or artifact, and the observed result. A skill without evidence is not published here.
+## The six
+
+| Skill | Area | What it decides |
+|---|---|---|
+| [`investigation`](skills/investigation/SKILL.md) | diagnóstico | Establishes a red-capable feedback loop, ranks falsifiable hypotheses, and confirms root cause without touching code |
+| [`frontend`](skills/frontend/SKILL.md) | front-end | Prototypes the direction before editing, then delivers one section at a time against a measured bar |
+| [`motion`](skills/motion/SKILL.md) | motion | Picks the smallest motion budget that carries hierarchy, then proves it respects reduced motion |
+| [`design-direction`](skills/design-direction/SKILL.md) | design | Turns references into a live direction board, one approved direction, and a brand package with measured contrast |
+| [`backend`](skills/backend/SKILL.md) | back-end | Ships one verifiable slice: contract, reversible migration, scoped store, routes, tests, evidence |
+| [`visual-qa`](skills/visual-qa/SKILL.md) | visual-qa | Measures overflow, contrast, touch targets, console, and both themes instead of trusting a screenshot |
+
+Each one states the capability it needs and leaves the tool to the repository: serving, rendering, capturing, measuring, migrating, testing. Nothing in a skill body names a product, a framework, or a harness, so the same procedure works with the stack you already have — and with whichever browser automation, animation runtime, or plugin your harness exposes.
+
+## The supporting six
+
+| Skill | Area | Role |
+|---|---|---|
+| [`dev-workflow`](skills/dev-workflow/SKILL.md) | workflow | Classifies intent, announces the chain and mode, enforces the gates |
+| [`repo-context`](skills/repo-context/SKILL.md) | workflow | Task-scoped, read-only map with `path:line` evidence |
+| [`prd`](skills/prd/SKILL.md) | workflow | Decision-ready requirements before code |
+| [`review-gate`](skills/review-gate/SKILL.md) | review | Independent review: Spec, Standards, Verification, and risk-triggered Security |
+| [`review-triage`](skills/review-triage/SKILL.md) | review | Fixed-target review with every finding triaged into confirmed, rejected, or unproven |
+| [`completion-gate`](skills/completion-gate/SKILL.md) | workflow | Tests a completion claim against fresh, claim-specific evidence |
+
+The catalog is [`ecosystem.json`](ecosystem.json): area, capabilities, and a dated evidence record per skill (project, commit or artifact, observed result). A skill without evidence is not published here.
 
 ## Try it
 
 ```sh
-git clone <this repository> && cd lmariano-skills
+git clone <this repository> && cd skills
 python3 scripts/run_demo.py
 ```
 
-One request, seven steps, no network, no credential, about two seconds. Full transcript and what each step proves: [docs/workflow-demo.md](docs/workflow-demo.md).
+One request, seven steps, no network, no credential, about two seconds. It runs the whole lifecycle against a real diff in a temporary directory: classification, context, red test, fix, review bound to a hash, measured visual pass, completion gate, and one mutation that invalidates the evidence. Transcript and what each step proves: [docs/workflow-demo.md](docs/workflow-demo.md).
 
-## Architecture
+## Use it in your harness
 
-The foundation has one entry point, six flow skills, and six capability skills. `dev-workflow` classifies the request and selects the smallest chain.
+A skill is a directory: `SKILL.md` with portable frontmatter plus optional `references/`. Anything that can read a skill directory can use it.
 
-| Skill | Area | Role |
-|---|---|---|
-| `dev-workflow` | workflow | Classify intent, announce the skill chain and mode, enforce gates, coordinate transitions |
-| `repo-context` | workflow | Build a task-scoped, read-only map with traceable evidence |
-| `investigation` | workflow | Establish a feedback loop, test ranked hypotheses, identify root cause without changing code |
-| `prd` | workflow | One-question discovery or direct synthesis of a decision-ready PRD |
-| `completion-gate` | workflow | Test a completion claim against fresh, claim-specific evidence |
-| `frontend-delivery` | front-end | Prototype first, deliver one section at a time, verify in a real browser |
-| `motion-design` | motion | Choose the motion budget, choreograph scroll, respect reduced motion, measure scroll behavior |
-| `design-direction` | design | Direction board from references, one approved direction, brand package with measured palette |
-| `backend-delivery` | back-end | One verifiable slice: contract, reversible migration, scoped store, routes, tests, evidence |
-| `review-gate` | review | Independent review across Spec, Standards, Verification, and risk-triggered Security |
-| `review-triage` | review | Tool-assisted review on a fixed target, every finding triaged into confirmed, rejected, or unproven |
-| `visual-qa` | visual-qa | Measured checks: overflow, contrast, touch targets, console, both themes, desktop and mobile |
+1. Copy `skills/<id>/` into the skills directory your harness reads, or point the harness at this repository's `skills/` folder.
+2. Load `SKILL.md` when its description matches the request; load a `references/` file only when the body links to it and the task needs that depth.
+3. Invocation syntax is the harness's business. `/skill:<id>`, a tool call, or a plain prompt that matches the description all work, because the description is written with the words a person uses to ask.
 
-The canonical catalog is [`ecosystem.json`](ecosystem.json). Skill bodies contain the always-needed procedure; direct `references/` links contain tables, recipes, and templates loaded only when relevant.
+To install selectively: one directory or one symlink per reviewed skill, resolved target verified. See [Selective installation](#selective-installation).
 
 ## Composition
 
@@ -49,7 +62,7 @@ The supported intents are `investigation`, `hotfix`, `bugfix`, `feature`, `refac
 A typical bugfix with visual impact:
 
 ```text
-Intent: bugfix · Skills: investigation → backend-delivery → review-gate → visual-qa → completion-gate · Mode: quick
+Intent: bugfix · Skills: investigation → backend → review-gate → visual-qa → completion-gate · Mode: quick
 ```
 
 Capability skills are optional in the sense that no repository is required to have them. When one is absent, continue with repository rules and native project commands, state the fallback, and never install anything during the task.
@@ -68,28 +81,16 @@ Capability skills are optional in the sense that no repository is required to ha
 
 ## Selective installation
 
-Prefer a per-project skills directory or a harness setting that points at selected skill directories. If symlinks are appropriate, create one link per reviewed skill and verify the resolved target before use. Never replace an existing directory, recursively link a whole upstream collection, or use an installer that deletes destinations.
-
-Example layout (paths are illustrative; inspect before creating):
+Prefer a per-project skills directory, or a harness setting that points at selected skill directories. If symlinks are appropriate, create one link per reviewed skill and verify the resolved target before use. Never replace an existing directory, recursively link a whole upstream collection, or use an installer that deletes destinations.
 
 ```text
 .agents/skills/
-  dev-workflow -> /reviewed/path/lmariano-skills/skills/dev-workflow
-  investigation -> /reviewed/path/lmariano-skills/skills/investigation
-  completion-gate -> /reviewed/path/lmariano-skills/skills/completion-gate
+  investigation   -> /reviewed/path/skills/skills/investigation
+  frontend        -> /reviewed/path/skills/skills/frontend
+  visual-qa       -> /reviewed/path/skills/skills/visual-qa
 ```
 
-## Pi activation test
-
-Test selective installation in a disposable or controlled project before broader use.
-
-1. Make only the skills under review discoverable by Pi, for example through individual safe symlinks under a trusted project's `.agents/skills/` directory.
-2. Start with explicit activation: `/skill:dev-workflow <task>`.
-3. Confirm the visible intent, skill chain, and mode announcement; request read-only investigation first.
-4. Repeat with the same natural-language prompt without `/skill:` and compare activation, evidence quality, and fallback reporting.
-5. Add and remove one optional stack capability to verify both selection and explicit fallback.
-
-Do not install entire upstream repositories for the first test. Their overlapping descriptions and environment-specific procedures can obscure routing results. Upstreams in `sources.lock.json` are attribution and comparison sources, not runtime dependencies.
+Test discovery with one explicit activation and one natural-language prompt, then add and remove one capability to confirm the fallback path. Upstreams in `sources.lock.json` are attribution and comparison sources, not runtime dependencies; do not install a whole upstream collection for a first test, because overlapping descriptions obscure routing.
 
 ## Attribution
 
@@ -97,12 +98,11 @@ The workflows adapt principles from Matt Pocock Skills, Superpowers, and Pi's Ag
 
 ## Validation
 
-All validation, evaluation, and demonstration tooling uses only the Python standard library. The layers prove different things:
+All tooling in this repository uses only the Python standard library.
 
-- **Structural validation** checks the catalog, portable frontmatter, area coverage, evidence records, links, size limits, JSON syntax, demo files, and routing/composition fixture coverage. It does not execute behavioral evals.
-- **Deterministic behavioral evals** parse synthetic, non-sensitive normalized events produced by a trusted harness or adapter. The compact lifecycle is `meta -> work/evidence* -> claim -> output -> verdict`; `meta` and `verdict` are the endpoints, lifecycle events are unique, and claim-supporting evidence must precede the claim. Global failure, authorization, mutation consistency, review independence, invalidation, and final-target timeline gates are derived by the evaluator rather than enabled by fixture invariants. An approved material transition adds the strict barrier `transition -> checkpoint -> skill_reload` before work may continue. Unknown, malformed, duplicate, or out-of-order events fail closed.
-- **The workflow demo** executes the lifecycle against a real diff in a temporary directory: red test, fix, review bound to a diff hash, measured visual pass, completion gate, and one deliberate mutation that invalidates the evidence.
-- **Live Pi evals** are opt-in and inference-bearing. They run Pi twice — natural prompt and explicit `/skill:dev-workflow` — from isolated runtime directories with discovery disabled, exactly the declared skill directories, no tools, no session, a minimal authentication/config environment allowlist, and a timeout. The extractor accepts Pi's documented JSON lifecycle mirrors (`message_end`, then matching `turn_end` and `agent_end`) while rejecting conflicting copies and spoof sources. Reports contain only bounded, redacted verdict fields and summaries rather than raw model output. The safe readiness default requires both runs to agree on `claim_permitted=false` and on either `fail` or `insufficient_evidence`.
+- **Structural validation** — catalog, portable frontmatter, area coverage, evidence records, links, size limits, JSON syntax, demo files, and fixture coverage. It does not execute behavioral evals.
+- **Deterministic behavioral evals** — parse synthetic, non-sensitive normalized events: `meta -> work/evidence* -> claim -> output -> verdict`. Unknown, malformed, duplicate, or out-of-order events fail closed.
+- **The demo** — executes the lifecycle against a real diff in a temporary directory.
 
 ```sh
 python3 scripts/validate.py
@@ -110,15 +110,9 @@ make demo
 make test
 ```
 
-`make test` runs the demo, structural validation, and deterministic behavioral evals. It is deterministic and free by default.
+`make test` runs the demo, structural validation, and the deterministic evals. It is offline and free.
 
-Run the live comparison explicitly only when inference cost and local Pi credentials are approved:
-
-```sh
-make live-pi-evals
-```
-
-The live runner does not expose write tools, save a session, or operate in a target repository; its report is emitted to standard output. It forwards only documented provider credential variables plus a small networking/locale allowlist, and replaces `HOME` and Pi runtime directories with temporary paths. Provider credentials therefore need to be available through supported environment variables rather than a persisted Pi auth file. Its structured verdict is still a model self-report rather than an independent semantic judge. In particular, model self-report cannot establish that a command was discovered from repository instructions or is truly canonical; only the trusted adapter's normalized deterministic events may assert that fact. Live success supplements but does not replace repository-native checks, trusted harness evidence, or human review. Do not redirect real session payloads, secrets, or sensitive prompts into committed files.
+`make live-evals` is the opt-in, inference-bearing variant: it runs a real harness twice and compares the verdicts. The repository ships one harness-specific adapter for it (`evals/pi_eval.py`) as a reference implementation; the skills themselves assume no harness. Do not redirect real session payloads, secrets, or sensitive prompts into committed files.
 
 ## License
 

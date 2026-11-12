@@ -4,12 +4,21 @@ from __future__ import annotations
 
 import ast
 import json
+import re
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = json.loads((ROOT / "ecosystem.json").read_text(encoding="utf-8"))
 PORTFOLIO_AREAS = {"front-end", "motion", "design", "back-end", "review", "visual-qa"}
+PORTFOLIO_SKILLS = {
+    "investigation",
+    "frontend",
+    "motion",
+    "design-direction",
+    "backend",
+    "visual-qa",
+}
 DEMO_SCRIPTS = (
     ROOT / "scripts" / "run_demo.py",
     ROOT / "examples" / "rounding-service" / "qa" / "check_preview.py",
@@ -51,7 +60,7 @@ class CatalogTest(unittest.TestCase):
             "dev-workflow",
             "repo-context",
             "investigation",
-            "backend-delivery",
+            "backend",
             "review-gate",
             "visual-qa",
             "completion-gate",
@@ -59,6 +68,28 @@ class CatalogTest(unittest.TestCase):
         self.assertEqual(chain - published, set())
         for name in chain:
             self.assertIn(f"`{name}`", demo)
+
+    def test_published_skills_name_no_tool(self) -> None:
+        published = {entry["name"] for entry in self.skills}
+        self.assertEqual(PORTFOLIO_SKILLS - published, set())
+        forbidden = (
+            "playwright", "puppeteer", "cypress", "selenium", "webdriver",
+            "chromium", "firefox", "safari", "gsap", "scrolltrigger", "framer",
+            "lenis", "tailwind", "figma", "lighthouse", "jest", "vitest",
+            "pytest", "react", "vue", "svelte", "angular", "vite", "webpack",
+            "nuxt", "golang", "postgres", "mysql", "mongodb", "redis", "sqlite",
+            "python3",
+        )
+        pattern = re.compile(r"\b(" + "|".join(forbidden) + r")\b", re.IGNORECASE)
+        for name in sorted(PORTFOLIO_SKILLS):
+            for path in (ROOT / "skills" / name).rglob("*.md"):
+                with self.subTest(skill=name, file=path.name):
+                    text = path.read_text(encoding="utf-8")
+                    self.assertEqual(
+                        [token for token in pattern.findall(text)],
+                        [],
+                        f"{path} names a specific tool or stack",
+                    )
 
     def test_demo_scripts_use_the_standard_library_only(self) -> None:
         allowed = set(getattr(__import__("sys"), "stdlib_module_names", ()))

@@ -30,7 +30,7 @@ REQUEST = (
     "pelo teste que falha. Corrija o parcelamento."
 )
 ROUTE = (
-    "Intent: bugfix · Skills: investigation → backend-delivery → review-gate → "
+    "Intent: bugfix · Skills: investigation → backend → review-gate → "
     "visual-qa → completion-gate · Mode: quick"
 )
 BUGGY = "    share = total_cents / count\n    return [int(share) for _ in range(count)]\n"

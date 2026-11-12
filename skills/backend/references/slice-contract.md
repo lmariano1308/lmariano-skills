@@ -48,7 +48,7 @@ Record the command and the result for each row. Use `not applicable` only with a
 | Category | Command | Result |
 |---|---|---|
 | format | | |
-| lint / vet | | |
+| lint / static analysis | | |
 | build | | |
 | focused tests | | |
 | relevant suite | | |

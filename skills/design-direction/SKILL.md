@@ -2,7 +2,7 @@
 name: design-direction
 description: "Turn visual references into a live direction board, get one direction approved, and close the brand package behind it. Use when the request is 'redesenha com esses prints', 'quero ver direções', 'monta um board', 'fecha a marca', 'preciso de logo e identidade', or when the current page was rejected as generic. Do not use to re-theme a product that already owns tokens, or to deliver a static document instead of a running page."
 license: MIT
-compatibility: "Local static server and a headless browser; SVG tooling is optional."
+compatibility: "A way to serve a page locally and an engine to look at it; vector tooling is optional and never assumed."
 ---
 
 # Design direction
@@ -22,7 +22,7 @@ A direction is a decision, not a collection. Produce the smallest artifact that 
 - A page that sells an existing product borrows that product's display face, UI face, accent, radius, and button. The directions vary composition and theme, not identity.
 - Assets are real captures of real work. Stock imagery and invented cases are the fastest way to look like everyone else.
 - Before embedding a real site inside a page, check its frame policy. If it refuses framing, show a composed capture instead of an empty frame.
-- Reject on sight: decorative gradient, glassmorphism, ornamental separators, floating generic icons, stock copy. The full list lives in `frontend-delivery` under `references/visual-bar.md`.
+- Reject on sight: decorative gradient, glassmorphism, ornamental separators, floating generic icons, stock copy. The full list lives in `frontend` under `references/visual-bar.md`.
 - Approval is per stage. Implement in the product repository only after the direction is chosen, one section at a time, with a running preview.
 
 ## Brand package
@@ -38,10 +38,10 @@ When the request is the mark itself, the order is fixed. Details and measurement
 
 ## Measurement
 
-- Draw the symbol from a parametric source (a small script with geometry constants). Regenerate to compare variants; never hand-edit the SVG.
-- Set the wordmark as paths so the lockup does not depend on an installed font.
+- Draw the symbol from a parametric source (a small script with geometry constants). Regenerate to compare variants; never hand-edit the vector file.
+- Convert the wordmark to outlines so the lockup does not depend on an installed font.
 - Compute contrast for every pair before writing the board. A light brand color usually fails as text and that finding belongs in the document.
-- Use a vision model for the whole composition and arithmetic for the numbers. When a visual critique contradicts a measurement, recompute before accepting it.
+- Judge the whole composition by looking at it; keep the numbers arithmetic. When a visual critique contradicts a measurement, recompute before accepting it.
 - Record what was not done (registration, domain purchase) instead of implying completeness.
 
 ## Output
